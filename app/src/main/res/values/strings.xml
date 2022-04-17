@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">SunmiV1sTest</string>
-    <string name="button_text">Print</string>
+    <string name="button_text">Print Text</string>
+    <string name="button_image">Print Image</string>
 </resources>

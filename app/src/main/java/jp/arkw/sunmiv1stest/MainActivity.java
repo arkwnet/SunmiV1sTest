@@ -3,6 +3,8 @@ package jp.arkw.sunmiv1stest;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.RemoteException;
 import android.view.View;
@@ -22,18 +24,22 @@ public class MainActivity extends AppCompatActivity {
     public static int LostSunmiPrinter = 0x00000003;
     public int sunmiPrinter = CheckSunmiPrinter;
 
-    private final String printText = "https://arkw.net/";
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initSunmiPrinterService(this);
-        findViewById(R.id.button).setOnClickListener(new View.OnClickListener() {
+
+        // Resources
+        String printText = "https://arkw.net/";
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image_192x256);
+
+        // Print Text
+        findViewById(R.id.button_text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 try {
-                    sunmiPrinterService.printText(printText + "\n\n\n\n\n\n", new InnerResultCallback() {
+                    sunmiPrinterService.printText(printText, new InnerResultCallback() {
                         @Override
                         public void onRunResult(boolean isSuccess) throws RemoteException {
                         }
@@ -53,8 +59,62 @@ public class MainActivity extends AppCompatActivity {
                 } catch (RemoteException e) {
                     e.printStackTrace();
                 };
+                feedPaper();
             }
         });
+
+        // Print Image
+        findViewById(R.id.button_image).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    sunmiPrinterService.printBitmap(bitmap, new InnerResultCallback() {
+                        @Override
+                        public void onRunResult(boolean isSuccess) throws RemoteException {
+                        }
+
+                        @Override
+                        public void onReturnString(String result) throws RemoteException {
+                        }
+
+                        @Override
+                        public void onRaiseException(int code, String msg) throws RemoteException {
+                        }
+
+                        @Override
+                        public void onPrintResult(int code, String msg) throws RemoteException {
+                        }
+                    });
+                } catch (RemoteException e) {
+                    e.printStackTrace();
+                };
+                feedPaper();
+            }
+        });
+    }
+
+    private void feedPaper() {
+        try {
+            sunmiPrinterService.lineWrap(5, new InnerResultCallback() {
+                @Override
+                public void onRunResult(boolean isSuccess) throws RemoteException {
+                }
+
+                @Override
+                public void onReturnString(String result) throws RemoteException {
+                }
+
+                @Override
+                public void onRaiseException(int code, String msg) throws RemoteException {
+                }
+
+                @Override
+                public void onPrintResult(int code, String msg) throws RemoteException {
+                }
+            });
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        };
     }
 
     private InnerPrinterCallback innerPrinterCallback = new InnerPrinterCallback() {

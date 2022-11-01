@@ -31,34 +31,14 @@ public class MainActivity extends AppCompatActivity {
         initSunmiPrinterService(this);
 
         // Resources
-        String printText = "https://arkw.net/";
+        String text = "https://arkw.net/";
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.image_192x256);
 
         // Print Text
         findViewById(R.id.button_text).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    sunmiPrinterService.printText(printText, new InnerResultCallback() {
-                        @Override
-                        public void onRunResult(boolean isSuccess) throws RemoteException {
-                        }
-
-                        @Override
-                        public void onReturnString(String result) throws RemoteException {
-                        }
-
-                        @Override
-                        public void onRaiseException(int code, String msg) throws RemoteException {
-                        }
-
-                        @Override
-                        public void onPrintResult(int code, String msg) throws RemoteException {
-                        }
-                    });
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                };
+                printText(text);
                 feedPaper();
             }
         });
@@ -67,30 +47,58 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_image).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    sunmiPrinterService.printBitmap(bitmap, new InnerResultCallback() {
-                        @Override
-                        public void onRunResult(boolean isSuccess) throws RemoteException {
-                        }
-
-                        @Override
-                        public void onReturnString(String result) throws RemoteException {
-                        }
-
-                        @Override
-                        public void onRaiseException(int code, String msg) throws RemoteException {
-                        }
-
-                        @Override
-                        public void onPrintResult(int code, String msg) throws RemoteException {
-                        }
-                    });
-                } catch (RemoteException e) {
-                    e.printStackTrace();
-                };
+                printImage(bitmap);
                 feedPaper();
             }
         });
+    }
+
+    private void printText(String text) {
+        try {
+            sunmiPrinterService.printText(text, new InnerResultCallback() {
+                @Override
+                public void onRunResult(boolean isSuccess) throws RemoteException {
+                }
+
+                @Override
+                public void onReturnString(String result) throws RemoteException {
+                }
+
+                @Override
+                public void onRaiseException(int code, String msg) throws RemoteException {
+                }
+
+                @Override
+                public void onPrintResult(int code, String msg) throws RemoteException {
+                }
+            });
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        };
+    }
+
+    private void printImage(Bitmap bitmap) {
+        try {
+            sunmiPrinterService.printBitmap(bitmap, new InnerResultCallback() {
+                @Override
+                public void onRunResult(boolean isSuccess) throws RemoteException {
+                }
+
+                @Override
+                public void onReturnString(String result) throws RemoteException {
+                }
+
+                @Override
+                public void onRaiseException(int code, String msg) throws RemoteException {
+                }
+
+                @Override
+                public void onPrintResult(int code, String msg) throws RemoteException {
+                }
+            });
+        } catch (RemoteException e) {
+            e.printStackTrace();
+        };
     }
 
     private void feedPaper() {

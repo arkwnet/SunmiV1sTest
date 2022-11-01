@@ -6,5 +6,5 @@
 
 SUNMI V1sの内蔵プリンタで文字列や画像を印刷するサンプルです。  
 アプリの起動前に端末のBluetooth機能を有効化してください。  
-「PRINT TEXT」ボタンをタッチすると`printText`の文字列（日本語OK）、「PRINT IMAGE」ボタンをタッチすると`bitmap`の画像が印刷されます。  
+「PRINT TEXT」ボタンをタッチすると`text`の文字列（日本語OK）、「PRINT IMAGE」ボタンをタッチすると`bitmap`の画像が印刷されます。  
 ライセンスは特に決めませんので、ご自由にお使いください。
